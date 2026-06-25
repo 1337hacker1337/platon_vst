@@ -1,0 +1,16 @@
+name: Build Platon V1
+on: [push, workflow_dispatch]
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build -G "Visual Studio 17 2022" -A x64
+      - name: Build VST3
+        run: cmake --build build --config Release --target PlatonV1_VST3
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: PlatonV1-Windows-VST3
+          path: build/PlatonV1_artefacts/Release/VST3/
